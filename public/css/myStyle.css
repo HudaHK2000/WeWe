@@ -1,0 +1,106 @@
+.input-datalist {
+    width: 100%; 
+    padding-inline:20px;
+}
+.input-datalist:focus {
+    outline: none;
+}
+.desc-h{
+    margin-top: 40px;
+    text-align: center;
+}
+.desc-p {
+    padding-block: 10px;
+}
+
+.dashboard-edit .product .prod_option .options:before {
+    border-bottom: 10px solid #D9D9D9;
+  }
+/* -------------------------validation -------------------------- */
+.validation {
+    border: 2px #ff6a6d solid;
+    border-radius: 12px;
+    color: #ff6a6d;
+}
+.span-validation {
+    color: #ff6a6d;
+    padding-left: 15px;
+}
+
+/* -------------------------------- section-register  -----------------------------*/
+
+/* nav --------------------------------------------------------------------------  */
+.logo{
+    color: #2a6075;
+    font-weight: bold;
+    font-family: "Kalam", cursive;
+    /* margin-top: 4px; */
+    text-shadow: #8faffb 3px 3px;
+    padding: 0;
+}  
+.mainmenu__menu .navbar-nav > li:hover > a {
+    color: #2a6075;
+}
+.mainmenu__menu .navbar-nav > li > a {
+    font-weight: bold;
+    font-size: 17px;
+}
+/* Top nav */
+
+.dropdowns.dropdown--author ul li .btn-top-nav {
+    color: #54667a;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    text-align: start;
+    display: block;
+    font-size: 15px;
+    -webkit-border-radius: 4px;
+            border-radius: 4px;
+    padding: 0 10px;
+    line-height: 40px;
+    -webkit-transition: 0.3s ease;
+    -o-transition: 0.3s ease;
+    transition: 0.3s ease;
+  }
+  
+  .dropdowns.dropdown--author ul li .btn-top-nav:hover {
+    background: #0674ec;
+    color: #fff;
+  }
+  
+  .dropdowns.dropdown--author ul li .btn-top-nav span {
+    float: none;
+    margin-right: 15px;
+  }
+/* home --------------------------------------------------------------------------- */
+.hero-area::before {
+    background: linear-gradient(rgba(8, 16, 62, 0.7), rgba(0, 0, 0, 0.4));
+}
+.hero-area .hero__content__title h1 {
+    font-size: 70px;
+    font-family: "Alkatra", system-ui;
+}  
+.hero-area .hero__content__title .tagline {
+    font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
+}
+.hero-area .hero__btn-area .btn {
+    font-weight: bold;
+}
+.hero-area .hero__btn-area .btn:hover {
+    color: #2a6075;
+}  
+.model-bgcolor{
+    background-color: #dfe2e6;;
+}
+.btn {
+    background: #2a6075;
+}
+.form-check-input {
+    margin-top: -0.7rem;
+}
+.hero-area .hero__btn-area .btn {
+    margin-bottom: 8px;
+}
