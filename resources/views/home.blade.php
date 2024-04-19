@@ -69,9 +69,9 @@ crossorigin=""/>
                         <div class="hero__btn-area">
                             <a class="btn btn--round btn--lg pl-3 pr-3" data-toggle="modal" data-target="#myModal2">Request emergency ambulance</a>
                         </div>
-                        <div class="hero__btn-area">
+                        {{-- <div class="hero__btn-area">
                             <a class="btn btn--round btn--lg pl-3 pr-3" data-toggle="modal" data-target="#myModal3">Request emergency ambulance</a>
-                        </div>
+                        </div> --}}
                         <!-- end .hero__btn-area-->
                     </div>
                     <!-- end /.col-md-12 -->

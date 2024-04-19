@@ -19,7 +19,7 @@
                         <!--start .author-author__info-->
                         <div class="author-author__info inline has_dropdown" style="padding: 7px;">
                             <div class="autor__info">
-                                <nav class="navbar navbar-light bg-white">
+                                <nav class="navbar navbar-light bg-white" style="padding-right: 0;">
                                     <button class="navbar-toggler navbar-blue" type="button">
                                         <span class="navbar-toggler-icon" style="color: #2A6075"></span>
                                     </button>

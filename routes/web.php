@@ -7,7 +7,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\AllUserController;
 use App\Http\Controllers\UrgentUserController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\HospitalDashboard;
+use App\Http\Controllers\HospitalDashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -64,15 +64,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('user/{id}/unblock', [AllUserController::class, 'UnblockedUser']);
 });
 
-// Define routes for hospital dashboard
-Route::middleware(['auth', 'hospital'])->group(function () {
-
-    Route::get('/hospitals/{hospital}/dashboard', function (Hospital $hospital) {
-        // $hospital now contains the Hospital instance for the current request
-        return view('HospitalDashboard.hospitalDashboard', compact('hospital'));
-    })->name('hospitalDashboard');
-    
+Route::middleware(['auth', 'HospitalAdmin'])->group(function () {
+    Route::get('/hospital/{hospital_id}/dashboard', [HospitalDashboardController::class, 'dashboard']);
+    Route::get('/getCities/{countryId}', [HospitalDashboardController::class,'getCities']);
+    Route::get('/hospital/{hospital_id}/show', [HospitalDashboardController::class, 'show']);
+    Route::post('/hospital/{hospital_id}/update', [HospitalDashboardController::class, 'update']);
 });
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

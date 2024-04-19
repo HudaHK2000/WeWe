@@ -21,8 +21,7 @@ return new class extends Migration
             $table->string('phone');
             $table->integer('is_admin')->unsigned()->default(0);
             $table->boolean('hide')->default(0);
-            $table->unsignedBigInteger('hospital_id')->nullable();
-            $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('hospital_id')->nullable()->references('id')->on('hospitals');
             $table->rememberToken();
             $table->timestamps();
         });

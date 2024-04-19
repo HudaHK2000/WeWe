@@ -34,6 +34,7 @@ class HospitalController extends Controller
         $cities = City::where('country_id', $countryId)->get();
         return response()->json($cities);
     }
+    
     public function showGPS($id){
         $hospital = Hospital::find($id);
         // dd($hospital);

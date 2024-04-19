@@ -37,9 +37,4 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
     }
-    // protected function bind()
-    // {
-    //     Route::model('hospital', 'App\Models\Hospital');
-    //     // ... (تعريفات ربط نموذج المسار الأخرى)
-    // }
 }

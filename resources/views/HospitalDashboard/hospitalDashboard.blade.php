@@ -46,7 +46,7 @@
                     <div class="breadcrumb">
                         <ul>
                             <li>
-                                <a href="{{ url('hospital-dashboard') }}">Hospital Dashboard</a>
+                                <a href='{{ url("/hospital/{$hospital->id}/dashboard") }}'>Hospital Dashboard</a>
                             </li>
                             <li>
                                 @yield('dashboard_breadcrumb')
@@ -76,33 +76,17 @@
             <div class="row">
                 <div class="col-md-12">
                 <ul class="dashboard_menu">
-                    <li class="@if (Request::is('dashboard')) active @endif">
-                        <a href="{{ url('dashboard') }}">
+                    <li class="@if  (Request::is('hospital/*/dashboard')) active @endif">
+                        <a href='{{ url("/hospital/{$hospital->id}/dashboard") }}'>
                             <span class="lnr lnr-home"></span>
                             Dashboard
                         </a>
                     </li>
-                    <li class="has_dropdown">
-                        <a href="#" class="@if ( Request::is('hospital') | Request::is('hospital/create') | Request::is('hospital/*/edit') | Request::is('hospital/showLocation/*')) active_nav @endif">
-                            <i class="fa-regular fa-hospital "></i>
-                            Hospital
+                    <li class="@if (Request::is('hospital/*/show')) active @endif">
+                        <a href='{{ url("/hospital/{$hospital->id}/show") }}'>
+                            <span class="fas fa-hospital-user"></span>
+                            Profile
                         </a>
-                        <div class="dropdowns dropdown--menu">
-                            <ul>
-                                <li class="f-li @if (Request::is('hospital/create')) active @endif">
-                                    <a href="{{ url('hospital/create') }}">
-                                        <i class="fa-solid fa-plus"></i>
-                                        Add
-                                    </a>
-                                </li>
-                                <li class="@if (Request::is('hospital')) active @endif">
-                                    <a href="{{ url('hospital') }}">
-                                        <i class="fa-solid fa-eye"></i>
-                                        Show
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li class="has_dropdown">
                         <a href="#" class="@if (Request::is('car') | Request::is('car/create') | Request::is('car/*/edit')) active_nav @endif">
@@ -128,8 +112,7 @@
                     </li>
                     <li class="has_dropdown">
                         <a href="#" class="@if (Request::is('status/create') | Request::is('status') | Request::is('status/*/edit')) active_nav @endif">
-                            <span class="lnr lnr-dice"></span>Status</a
-                            >
+                            <span class="lnr lnr-dice"></span>Status</a>
                         <div class="dropdowns dropdown--menu">
                             <ul>
                                 <li class="f-li @if (Request::is('status/create')) active @endif">
@@ -165,6 +148,9 @@
         <!-- end /.dashboard_menu_area -->
         <div class="dashboard_contents ">
             <div class="container">
+                {{-- @php
+                $hospital = $hospital->find($request->route('hospital_id'));
+                @endphp --}}
                 @yield('content')
             </div>
             <!-- end /.container -->
