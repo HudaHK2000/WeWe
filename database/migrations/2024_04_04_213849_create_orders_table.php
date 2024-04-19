@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('blood_group');
             $table->foreignId('user_id')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('urgent_user_id')->nullable()->constrained()->references('id')->on('urgent_users');            
-            $table->foreignId('car_id')->references('id')->on('cars');
+            $table->foreignId('car_id')->nullable()->references('id')->on('cars');
+            $table->double('price')->unsigned()->nullable();
+            $table->boolean('hide')->default(0);
             $table->timestamps();
         });
     }

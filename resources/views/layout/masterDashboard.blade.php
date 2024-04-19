@@ -17,6 +17,11 @@
 
     <!-- inject:css -->
     @include('layout.css')
+    <style>
+    .f-li{
+        margin-left: 30px !important;
+    }
+    </style>
     </head>
 
 <body @yield('class_body')>
@@ -41,10 +46,10 @@
                     <div class="breadcrumb">
                         <ul>
                             <li>
-                                <a href="{{ url('home') }}">Home</a>
+                                <a href="{{ url('dashboard') }}">Dashboard</a>
                             </li>
                             <li>
-                                <a href="{{ url('dashboard') }}">Dashboard</a>
+                                @yield('dashboard_breadcrumb')
                             </li>
                         </ul>
                     </div>
@@ -68,59 +73,118 @@
     <section class="dashboard-area">
         <div class="dashboard_menu_area">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="dashboard_menu">
-                            <li class="@if (Request::is('dashboard')) active @endif">
-                                <a href="{{ url('dashboard') }}">
-                                    <span class="lnr lnr-home"></span>Dashboard</a>
-                            </li>
-                            <li class="@if (Request::is('hospital')) active @endif">
-                                <a href="{{ url('hospital') }}">
-                                    <span class="lnr lnr-cog"></span>All Hospitals
+            <div class="row">
+                <div class="col-md-12">
+                <ul class="dashboard_menu">
+                    <li class="@if (Request::is('dashboard')) active @endif">
+                        <a href="{{ url('dashboard') }}">
+                            <span class="lnr lnr-home"></span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="has_dropdown">
+                        <a href="#" class="@if ( Request::is('hospital') | Request::is('hospital/create') | Request::is('hospital/*/edit') | Request::is('hospital/showLocation/*')) active_nav @endif">
+                            <i class="fa-regular fa-hospital "></i>
+                            Hospital
+                        </a>
+                        <div class="dropdowns dropdown--menu">
+                            <ul>
+                                <li class="f-li @if (Request::is('hospital/create')) active @endif">
+                                    <a href="{{ url('hospital/create') }}">
+                                        <i class="fa-solid fa-plus"></i>
+                                        Add
+                                    </a>
+                                </li>
+                                <li class="@if (Request::is('hospital')) active @endif">
+                                    <a href="{{ url('hospital') }}">
+                                        <i class="fa-solid fa-eye"></i>
+                                        Show
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="has_dropdown">
+                        <a href="#" class="@if (Request::is('car') | Request::is('car/create') | Request::is('car/*/edit')) active_nav @endif">
+                            <i class="fa-solid fa-truck-medical"></i>
+                            <span>Cars</span>
+                        </a>
+                        <div class="dropdowns dropdown--menu">
+                            <ul>
+                                <li class="f-li @if (Request::is('car/create')) active @endif">
+                                    <a href="{{ url('car/create') }}">
+                                        <i class="fa-solid fa-plus"></i>
+                                        Add
+                                    </a>
+                                </li>
+                                <li class="@if (Request::is('car')) active @endif">
+                                    <a href="{{ url('car') }}">
+                                        <i class="fa-solid fa-eye"></i>
+                                        Show
                                 </a>
-                            </li>
-                            <li class="@if (Request::is('hospital/create')) active @endif">
-                                <a href="{{ url('hospital/create') }}">
-                                    <span class="lnr lnr-cog"></span>Add Hospital
-                                </a>
-                            </li>
-                            <li class="@if (Request::is('car')) active @endif">
-                                <a href="{{ url('car') }}">
-                                    <span class="lnr lnr-cart"></span>Cars
-                                </a>
-                            </li>
-                            <li class="@if (Request::is('employee')) active @endif">
-                                <a href="{{ url('employee') }}">
-                                    <span class="lnr lnr-dice"></span>Employee
-                                </a>
-                            </li>
-                            <li class="@if (Request::is('user')) active @endif">
-                                <a href="{{ url('user') }}">
-                                    <span class="lnr lnr-chart-bars"></span>User
-                                </a>
-                            </li>
-                            <li class="@if (Request::is('status')) active @endif">
-                                <a href="{{ url('status') }}">
-                                    <span class="lnr lnr-upload"></span>Status
-                                </a>
-                            </li>
-                            <li class="@if (Request::is('order')) active @endif">
-                                <a href="{{ url('order') }}">
-                                    <span class="lnr lnr-briefcase"></span>Order
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- end /.dashboard_menu -->
-                    </div>
-                    <!-- end /.col-md-12 -->
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="has_dropdown">
+                        <a href="#" class="@if (Request::is('status/create') | Request::is('status') | Request::is('status/*/edit')) active_nav @endif">
+                            <span class="lnr lnr-dice"></span>Status</a
+                            >
+                        <div class="dropdowns dropdown--menu">
+                            <ul>
+                                <li class="f-li @if (Request::is('status/create')) active @endif">
+                                    <a href="{{ url('status/create') }}">
+                                        <i class="fa-solid fa-plus"></i>
+                                        Add
+                                    </a>
+                                </li>
+                                <li class="@if (Request::is('status')) active @endif">
+                                    <a href="{{ url('status') }}">
+                                        <i class="fa-solid fa-eye"></i>
+                                        Show
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="has_dropdown">
+                        <a href="#" class="@if (Request::is('all-users') | Request::is('blocked-users')) active_nav @endif">
+                            <i class="fa-regular fa-user"></i>
+                            Users
+                        </a>
+                        <div class="dropdowns dropdown--menu">
+                            <ul>
+                                <li class="f-li @if (Request::is('all-users')) active @endif">
+                                    <a href="{{ url('all-users') }}">
+                                        <i class="fa-solid fa-user-check"></i>
+                                        Show
+                                    </a>
+                                </li>
+                                <li class="@if (Request::is('blocked-users')) active @endif">
+                                    <a href="{{ url('blocked-users') }}">
+                                        <i class="fa-solid fa-user-alt-slash "></i>
+                                        Blocked Users
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="@if (Request::is('order')) active @endif">
+                        <a href="{{ url('order') }}">
+                            <span class="lnr lnr-upload"></span>
+                            Orders
+                        </a>
+                    </li>
+                </ul>
+                <!-- end /.dashboard_menu -->
                 </div>
-                <!-- end /.row -->
+                <!-- end /.col-md-12 -->
+            </div>
+            <!-- end /.row -->
             </div>
             <!-- end /.container -->
         </div>
         <!-- end /.dashboard_menu_area -->
-
         <div class="dashboard_contents ">
             <div class="container">
                 @yield('content')
@@ -129,7 +193,7 @@
         </div>
         <!-- end /.dashboard_menu_area -->
     </section>
-    <!--================================
+      <!--================================
             END DASHBOARD AREA
     =================================-->
 

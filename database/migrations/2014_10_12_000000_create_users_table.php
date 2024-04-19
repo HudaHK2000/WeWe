@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('address');
             $table->string('phone');
-            $table->string('is_admin')->default('user');
+            $table->integer('is_admin')->unsigned()->default(0);
+            $table->boolean('hide')->default(0);
+            $table->unsignedBigInteger('hospital_id')->nullable();
+            $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade')->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

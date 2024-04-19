@@ -13,7 +13,14 @@ class Hospital extends Model
     public function cars(){
         return $this->hasMany('App\Models\Car');
     }
+    public function orders(){
+        return $this->hasMany('App\Models\OrderHospital');
+    }
     public function city(){
         return $this->belongsTo('App\Models\City','city_id','id');
     }
+    public function user(){
+        return $this->hasMany('App\Models\User');
+    }
+
 }

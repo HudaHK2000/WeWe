@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignID('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignID('status_id')->references('id')->on('statuses')->onDelete('cascade')->onUpdate('cascade');
-            $table->double('price')->unsigned();
             $table->timestamps();
         });
     }

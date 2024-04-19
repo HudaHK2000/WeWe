@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->double('car_number')->unsigned();
             $table->foreignID('hospital_id')->references('id')->on('hospitals');
-            $table->double('latitude');
-            $table->double('longitude');
             $table->timestamps();
         });
     }

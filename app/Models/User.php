@@ -11,10 +11,6 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
-    public function orders(){
-        return $this->hasMany('App\Models\Order');
-    }
     /**
      * The attributes that are mass assignable.
      *
@@ -25,7 +21,10 @@ class User extends Authenticatable
         'email',
         'password',
         'address',
-        'phone'
+        'phone',
+        'is_admin',
+        'hide',
+        'hospital_id'
     ];
 
     /**
@@ -47,4 +46,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function orders(){
+        return $this->hasMany('App\Models\Order');
+    }
+    public function hospital()
+    {
+    return $this->belongsTo('App\Models\Hospital','hospital_id','id');
+    }
 }

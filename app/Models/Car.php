@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Car extends Model
 {
     use HasFactory;
-    protected $fillable=['car_number','hospital_id','latitude','longitude'];
+    protected $fillable=['car_number','hospital_id'];
 
     public function hospital(){
         return $this->belongsTo('App\Models\Hospital','hospital_id','id');
@@ -22,7 +22,4 @@ class Car extends Model
         return $this->hasMany('App\Models\Employee');
     }
 
-    public function carsStatuses(){
-        return $this->hasMany('App\Models\CarStatus');
-    }
 }

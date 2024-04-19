@@ -34,14 +34,19 @@ class HospitalController extends Controller
         $cities = City::where('country_id', $countryId)->get();
         return response()->json($cities);
     }
+    public function showGPS($id){
+        $hospital = Hospital::find($id);
+        // dd($hospital);
+        return view('BackEnd.hospital.map',compact('hospital'));
+    }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => ['required'],
-            'address' => ['required'],
+            'name' => ['required','min:3'],
+            'address' => ['required','min:10'],
             'latitude' => ['required','numeric'],
             'longitude' => ['required','numeric'],
             'country_id' => ['required'],
@@ -94,8 +99,8 @@ class HospitalController extends Controller
     public function update(Request $request, Hospital $hospital)
     {
         $validator = Validator::make($request->all(),[
-            'name' => ['required'],
-            'address' => ['required'],
+            'name' => ['required','min:3'],
+            'address' => ['required','min:10'],
             'latitude' => ['required','numeric'],
             'longitude' => ['required','numeric'],
             'country_id' => ['required'],
@@ -125,7 +130,6 @@ class HospitalController extends Controller
      */
     public function destroy(Hospital $hospital)
     {
-        // $country = country::find($id);
         $hospital->delete();
         return redirect()->back()->with('success','The deletion was completed successfully.');
     

@@ -4,6 +4,10 @@
 Hospital
 @endsection
 
+@section('dashboard_breadcrumb')
+<a href="{{ url('hospital') }}">Hospitals</a>
+@endsection
+
 @section('title_dashboard')
 Hospital
 @endsection
@@ -111,11 +115,10 @@ class="preload dashboard-edit"
             <div class="product-desc">
                 <h4 class="desc-h">{{ $hospital->name }}</h4>
                 <p class="desc-p">
-                    {{ $hospital->about }}
                 </p>
                 <div class="address-hospital"> 
-                    <span class="tiles__icon lnr lnr-map-marker"></span>
-                    <span class="a"> {{ $hospital->address }}</span>
+                    <i class="fas fa-map-marked-alt" style="color: #0674ec"></i>
+                    <span class="a">{{ $hospital->city->country->name }} - {{ $hospital->city->name }} , {{ $hospital->address }}</span>
                 </div>
 
             </div>
@@ -123,7 +126,7 @@ class="preload dashboard-edit"
             <div class="product-purchase">
                 <div class="price_love">
                     <span>
-                        <a href="#">Show GPS</a>
+                        <a href='{{ url("hospital/showLocation/$hospital->id") }}'>Show GPS</a>
                     </span>
                 </div>
             </div>
@@ -134,46 +137,47 @@ class="preload dashboard-edit"
     </div>
     <!-- end /.col-md-4 -->
     <div
-class="modal fade rating_modal item_remove_modal"
-id="myModal2{{ $hospital->id }}"
-tabindex="-1"
-role="dialog"
-aria-labelledby="myModal2"
->
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Are you sure to delete The {{ $hospital->name }}?</h3>
-                <p>You will not be able to recover this file!</p>
-                <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                >
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <!-- end /.modal-header -->
-            <div class="modal-body">
-                <form method="post" action='{{ url("hospital/$hospital->id") }}' style="display: inline;">
-                    @method('delete')
-                    @csrf
+    class="modal fade rating_modal item_remove_modal"
+    id="myModal2{{ $hospital->id }}"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModal2"
+    >
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Are you sure to delete The {{ $hospital->name }}?</h3>
+                    <p>You will not be able to recover this file!</p>
                     <button
-                    type="submit"
-                    class="btn btn--round btn-danger btn--default"
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
                     >
-                    Delete
+                        <span aria-hidden="true">&times;</span>
                     </button>
-                </form>
-                <button class="btn btn--round modal_close" data-dismiss="modal">
-                Cancel
-                </button>
+                </div>
+                <!-- end /.modal-header -->
+                <div class="modal-body">
+                    <form method="post" action='{{ url("hospital/$hospital->id") }}' style="display: inline;">
+                        @method('delete')
+                        @csrf
+                        <button
+                        type="submit"
+                        {{-- btn btn--icon btn-md btn--round btn-success --}}
+                        class="btn btn--round btn-danger btn-md"
+                        >
+                        Delete
+                        </button>
+                    </form>
+                    <button class="btn btn--round btn--default modal_close" data-dismiss="modal">
+                    Cancel
+                    </button>
+                </div>
+                <!-- end /.modal-body -->
             </div>
-            <!-- end /.modal-body -->
         </div>
     </div>
-</div>
     @endforeach
 </div>
 

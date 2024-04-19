@@ -205,7 +205,7 @@ class CountrySeeder extends Seeder
             ['name' => 'Swaziland', 'country_code' => 268],
             ['name' => 'Sweden', 'country_code' => 46],
             ['name' => 'Switzerland', 'country_code' => 41],
-            ['name' => 'Syrian Arab Republic', 'country_code' => 963],
+            ['name' => 'Syria', 'country_code' => 963],
             ['name' => 'Taiwan, Province of China', 'country_code' => 886],
             ['name' => 'Tajikistan', 'country_code' => 992],
             ['name' => 'Tanzania, United Republic of', 'country_code' => 255],
