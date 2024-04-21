@@ -7,6 +7,9 @@
     background-color: #0674ec;
     border-radius: 12px;
 }  
+body {
+  overflow-x: hidden;
+}
 .input-datalist {
     width: 100%; 
     padding-inline:20px;
@@ -151,7 +154,6 @@
   }
   
   /* home --------------------------------------------------------------------------- */
-  
   .hero-area::before {
     background: linear-gradient(rgba(8, 16, 62, 0.7), rgba(0, 0, 0, 0.4));
   }
@@ -189,6 +191,24 @@
   .hero-area .hero__btn-area .btn {
     margin-bottom: 8px;
   }
+  .hero-area.bgimage {
+    height: 500px;
+  }
+  @media screen and (max-width: 767px) {
+    .hero-area.bgimage{
+      height: 80vh;
+    }
+}
+/* about us ------------------ */
+.about-us-title{
+  text-align: center;
+  padding: 40px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+  color: #253e6f;
+  font-size: 35px;
+}
+
 /* safety ------------------------------------------------------------------------------ */
 
 .accordion .accordion__single .single_acco_title a.active, .accordion .accordion__single .panel-title a.active, .accordion .panel-default .single_acco_title a.active, .accordion .panel-default .panel-title a.active, .panel-group .accordion__single .single_acco_title a.active, .panel-group .accordion__single .panel-title a.active, .panel-group .panel-default .single_acco_title a.active, .panel-group .panel-default .panel-title a.active {
@@ -370,7 +390,89 @@ p{
   font-size: 20px;
 }
 
+.message-type{
+  align-items: center;
+}
+.message-type label{
+padding-right: 50px;
+align-items: center;
+}
+/* our team ----------------------------------------------- */
+.out-team-title{
+  margin-top: 20px;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+  color: #253e6f;
+  font-size: 35px;
+  border: #c1c1c1  solid 3px;
+}
 
+.our-team-img{
+  width: 100%;
+  height: 100%;
+  background: url(../images/our-team-img.jpg);
+  background-size: cover;
+  cursor: pointer;
+}
+
+.our-team-imgcolor{
+  background-color:rgba(7, 90, 247, 0.32);
+  width: 100%;
+  height: 100%;
+  padding: 9px;
+  opacity: 0;
+  transition: all 0.4s ease-in-out;
+}
+
+.our-team-imgborder{ 
+  border: 2px solid white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  padding: 100px;
+}
+
+.our-team-img:hover .our-team-imgcolor {opacity: 1;}
+
+.our-team-imgborder a{
+  text-decoration: none;
+  color: white;
+  margin: 10px;
+  font-size: 50px;
+}
+
+.our-team-imgborder a:hover{ 
+  color: #0e1226cc;
+}
+
+/* first aid ---------------------------------------------- */
+.first-aid-title{
+  text-align: center;
+  padding: 20px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+  color: #253e6f;
+  font-size: 35px;
+  border-bottom: #f3f3f3 solid 3px;
+}
+
+
+.first-aid-img{
+  box-shadow: -5px 6px 30px 5px rgb(136, 126, 126);
+  animation: shadow 2s linear infinite;
+}
+ 
+@keyframes shadow{
+    from{box-shadow: -6px 6px 30px 5px rgb(129, 195, 206);}
+    50%{box-shadow: 0px 0px 30px 5px rgb(44, 115, 115);}
+    to{box-shadow: -6px 6px 30px 5px rgb(129, 195, 206);}
+}
 
 /* contact us ---------------------------------------------------------- */
 .contact-text p{
@@ -379,18 +481,10 @@ p{
   color: #253e6f;
   font-size:  35px;
   padding: 20px;
-  border-bottom: #e37d7d solid 3px;
+  border-bottom: #f3f3f3 solid 3px;
   text-align: center;
 }
 
 .filling-sec{
   padding: 30px;
-}
-
-.message-type{
-  align-items: center;
-}
-.message-type label{
-padding-right: 50px;
-align-items: center;
 }

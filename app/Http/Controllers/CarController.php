@@ -41,6 +41,13 @@ class CarController extends Controller
     ],[
         'car_number.required'=> 'Please enter the car_number',
     ])->validate();
+    // إحضار المستشفى
+    $hospital = Hospital::find($request->hospital_id);
+
+    // زيادة قيمة car_count للمستشفى
+    $hospital->car_count += 1;
+    $hospital->save();
+
     $car = car::create([
         'car_number' => $request->car_number,
         'hospital_id' => $request->hospital_id,
@@ -72,11 +79,24 @@ class CarController extends Controller
         $validator = Validator::make($request->all(), [
             'car_number' => ['required', 'min:4'],
             'hospital_id' => ['required'],
-            'status_id' => ['required', 'array'], // يجب أن تكون مصفوفة
         ], [
             'car_number.required' => 'Please enter the car number',
         ])->validate();
 
+        // إحضار المستشفى القديم
+        $oldHospital = $car->hospital;
+        
+        // إحضار المستشفى الجديد
+        $newHospital = Hospital::find($request->hospital_id);
+
+        // تعديل car_count للمستشفى القديم
+        if ($oldHospital->id !== $newHospital->id) {
+            $oldHospital->car_count -= 1;
+            $oldHospital->save();
+        // زيادة car_count للمستشفى الجديد
+            $newHospital->car_count += 1;
+            $newHospital->save();
+        }
         $car->update([
             'car_number' => $request->car_number,
             'hospital_id' => $request->hospital_id,
@@ -89,6 +109,13 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
+        // إحضار المستشفى
+        $hospital = $car->hospital;
+
+        // تقليل car_count للمستشفى
+        $hospital->car_count -= 1;
+        $hospital->save();
+
         $car->delete();
         return redirect()->back()->with('success','The deletion was completed successfully.');
     }

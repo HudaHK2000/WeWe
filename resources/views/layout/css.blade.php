@@ -15,7 +15,7 @@
 <!-- Favicon -->
 <link rel="icon" type="image/icon" href="{{ asset('images/icon-We-Wee.icon') }}">
 
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+{{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 
 <!-- start fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">

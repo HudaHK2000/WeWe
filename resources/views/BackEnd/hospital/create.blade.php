@@ -209,7 +209,7 @@ crossorigin=""></script>
             var selectedOption = $('datalist#countries option[value="' + $(this).val() + '"]');
             if (selectedOption.length > 0) {
                 countryId = selectedOption.data('country-id');
-                console.log(countryId);
+                // console.log(countryId);
             }
             if(countryId){
                 $.ajax({

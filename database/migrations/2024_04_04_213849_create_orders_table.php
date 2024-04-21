@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('urgent_user_id')->nullable()->constrained()->references('id')->on('urgent_users');            
             $table->foreignId('car_id')->nullable()->references('id')->on('cars');
             $table->double('price')->unsigned()->nullable();
+            $table->string('status')->default('NewOrder');
             $table->boolean('hide')->default(0);
             $table->timestamps();
         });

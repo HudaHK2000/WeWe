@@ -1,5 +1,5 @@
 <!-- start menu-area -->
-<div class="menu-area">
+<div class="menu-area" style="background-color: white;box-shadow: 0px 12px 20px 0px rgb(0 0 0 / 13%), 0px 2px 4px 0px rgb(0 0 0 / 12%);" >
     <!-- start .mainmenu_area -->
     <div class="mainmenu">
         <!-- start .container -->
@@ -29,17 +29,18 @@
                                 <ul>
                                     <li>
                                         <a href="{{ url('home') }}" class="@if (Request::is('home')) active @endif">
-                                            <span class="lnr lnr-home"></span>HOME
+                                            <span class="fas fa-home"></span>HOME
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ url('about') }}" class="@if (Request::is('about')) active @endif">
-                                            <span class="lnr lnr-briefcase"></span>ABOUT US
+                                            <span class="fas fa-briefcase"></span>ABOUT US
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('emergency-numbers') }}" class="@if (Request::is('emergency-numbers')) active @endif">
-                                            <span class="lnr lnr-phone"></span>EMERGENCY NUMBERS
+                                        <a href="{{ url('first-aid') }}" class="@if (Request::is('first-aid')) active @endif">
+                                            <span class="fas fa-briefcase-medical"></span>
+                                            FIRST AID
                                         </a>
                                     </li>
                                     <li>
@@ -48,13 +49,18 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('our-team') }}" class="@if (Request::is('our-team')) active @endif">
-                                            <span class="fas fa-users"></span>Our Team
+                                        <a href="{{ url('emergency-numbers') }}" class="@if (Request::is('emergency-numbers')) active @endif">
+                                            <span class="fas fa-phone"></span>EMERGENCY NUMBERS
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ url('contact-us') }}" class="@if (Request::is('contact-us')) active @endif">
                                             <span class="fas fa-envelope-open-text"></span>Contact
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('our-team') }}" class="@if (Request::is('our-team')) active @endif">
+                                            <span class="fas fa-users"></span>Our Team
                                         </a>
                                     </li>
                                     @guest
@@ -65,23 +71,19 @@
                                     </li>   
                                     <li>
                                         <a href="{{ route('register') }}" class="@if (Request::is('register')) active @endif">
-                                            <span class="lnr lnr-user"></span>{{ __('Register') }}</a>
+                                            <span class="fas fa-user"></span>{{ __('Register') }}</a>
                                     </li>  
                                     @endguest
                                     @auth
                                         @if (auth()->user()->is_admin == '1')
                                         <li>
                                             <a href="{{ route('dashboard') }}" class="@if (Request::is('dashboard')) active @endif">
-                                                <span class="lnr lnr-home"></span>{{ __('Dashboard') }}</a>
+                                                <span class="fas fa-home"></span>{{ __('Dashboard') }}</a>
                                         </li>
                                         @endif
                                     <li class="@if (Request::is('profile')) active @endif">
                                         <a href="{{ url('profile') }}">
-                                            <span class="lnr lnr-user"></span>{{ __('Profile') }}</a>
-                                    </li>
-                                    <li>
-                                        <a href="dashboard-setting.html">
-                                            <span class="lnr lnr-cog"></span> Setting</a>
+                                            <span class="fas fa-user"></span>{{ __('Profile') }}</a>
                                     </li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
@@ -131,17 +133,18 @@
                                 <ul>
                                     <li>
                                         <a href="{{ url('home') }}" class="@if (Request::is('home')) active @endif">
-                                            <span class="lnr lnr-home"></span>HOME
+                                            <span class="fas fa-home"></span>HOME
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ url('about') }}" class="@if (Request::is('about')) active @endif">
-                                            <span class="lnr lnr-briefcase"></span>ABOUT US
+                                            <span class="fas fa-briefcase"></span>ABOUT US
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('emergency-numbers') }}" class="@if (Request::is('emergency-numbers')) active @endif">
-                                            <span class="lnr lnr-phone"></span>EMERGENCY NUMBERS
+                                        <a href="{{ url('first-aid') }}" class="@if (Request::is('first-aid')) active @endif">
+                                            <span class="fas fa-briefcase-medical"></span>
+                                            FIRST AID
                                         </a>
                                     </li>
                                     <li>
@@ -150,13 +153,18 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('our-team') }}" class="@if (Request::is('our-team')) active @endif">
-                                            <span class="fas fa-users"></span>Our Team
+                                        <a href="{{ url('emergency-numbers') }}" class="@if (Request::is('emergency-numbers')) active @endif">
+                                            <span class="fas fa-phone"></span>EMERGENCY NUMBERS
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ url('contact-us') }}" class="@if (Request::is('contact-us')) active @endif">
                                             <span class="fas fa-envelope-open-text"></span>Contact
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('our-team') }}" class="@if (Request::is('our-team')) active @endif">
+                                            <span class="fas fa-users"></span>Our Team
                                         </a>
                                     </li>
                                     @guest
@@ -167,21 +175,19 @@
                                     </li>   
                                     <li>
                                         <a href="{{ route('register') }}" class="@if (Request::is('register')) active @endif">
-                                            <span class="lnr lnr-user"></span>{{ __('Register') }}</a>
+                                            <span class="fas fa-user"></span>{{ __('Register') }}</a>
                                     </li>  
                                     @endguest
                                     @auth
-                                    <li>
-                                        <a href="{{ route('dashboard') }}" class="@if (Request::is('dashboard')) active @endif">
-                                            <span class="lnr lnr-home"></span>{{ __('Dashboard') }}</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('profile') }}" class="@if (Request::is('profile')) active @endif">
-                                            <span class="lnr lnr-user"></span>{{ __('Profile') }}</a>
-                                    </li>
-                                    <li>
-                                        <a href="dashboard-setting.html">
-                                            <span class="lnr lnr-cog"></span> Setting</a>
+                                        @if (auth()->user()->is_admin == '1')
+                                        <li>
+                                            <a href="{{ route('dashboard') }}" class="@if (Request::is('dashboard')) active @endif">
+                                                <span class="fas fa-home"></span>{{ __('Dashboard') }}</a>
+                                        </li>
+                                        @endif
+                                    <li class="@if (Request::is('profile')) active @endif">
+                                        <a href="{{ url('profile') }}">
+                                            <span class="fas fa-user"></span>{{ __('Profile') }}</a>
                                     </li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">

@@ -23,8 +23,12 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [HomeController::class, 'index']);
 Route::get('home', [HomeController::class, 'index'])->name('home');
+Route::get('trackWidth', [HomeController::class, 'trackWidth']);
 Route::get('/about', function () {
     return view('frontEnd.about');
+});
+Route::get('/first-aid', function () {
+    return view('frontEnd.firstAid');
 });
 Route::get('/safety-instructions', function () {
     return view('frontEnd.safetyInstructions');
@@ -62,6 +66,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('user/{id}/block', [AllUserController::class, 'blockUser']);
     Route::get('blocked-users', [AllUserController::class, 'showBlockedUsers']);
     Route::post('user/{id}/unblock', [AllUserController::class, 'UnblockedUser']);
+    // Route for orders
+    Route::resource('order', OrderController::class);
+    Route::get('customer-location/{id}', [OrderController::class, 'showGPS']);
+
 });
 
 Route::middleware(['auth', 'HospitalAdmin'])->group(function () {
@@ -69,6 +77,9 @@ Route::middleware(['auth', 'HospitalAdmin'])->group(function () {
     Route::get('/getCities/{countryId}', [HospitalDashboardController::class,'getCities']);
     Route::get('/hospital/{hospital_id}/show', [HospitalDashboardController::class, 'show']);
     Route::post('/hospital/{hospital_id}/update', [HospitalDashboardController::class, 'update']);
+    // Route for orders
+    Route::post('order/{hospital_id}/add', [HospitalDashboardController::class, 'index']);
+    Route::get('customer-location/{id}', [HospitalDashboardController::class, 'showGPS']);
 });
 
 Route::middleware('auth')->group(function () {

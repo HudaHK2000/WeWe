@@ -64,15 +64,30 @@ crossorigin=""/>
                             </h1>
                             <p class="tagline">Order now an ambulance car</p>
                         </div>
+                        @guest
+                            <div class="hero__btn-area">
+                                <a class="btn btn--round btn--lg pl-3 pr-3" data-toggle="modal" data-target="#myModal2">Request emergency ambulance</a>
+                            </div>
+                        @endguest
+                        @auth
+                            @php
+                            $user = Auth::user();
+                            $ordersToday = App\Models\Order::where('user_id',$user->id)
+                                ->where('hide',0)
+                                ->whereDate('created_at', Carbon\Carbon::today())
+                                ->first();
+                            @endphp
 
-                        <!-- start .hero__btn-area-->
-                        <div class="hero__btn-area">
-                            <a class="btn btn--round btn--lg pl-3 pr-3" data-toggle="modal" data-target="#myModal2">Request emergency ambulance</a>
-                        </div>
-                        {{-- <div class="hero__btn-area">
-                            <a class="btn btn--round btn--lg pl-3 pr-3" data-toggle="modal" data-target="#myModal3">Request emergency ambulance</a>
-                        </div> --}}
-                        <!-- end .hero__btn-area-->
+                            @if ($ordersToday && $ordersToday->hide == 0)
+                                <div class="hero__btn-area">
+                                    <a class="btn btn--round btn--lg pl-3 pr-3" data-toggle="modal" data-target="#myModal3">Research</a>
+                                </div>
+                            @else
+                                <div class="hero__btn-area">
+                                    <a class="btn btn--round btn--lg pl-3 pr-3" data-toggle="modal" data-target="#myModal2">Request emergency ambulance</a>
+                                </div>
+                            @endif
+                        @endauth                        
                     </div>
                     <!-- end /.col-md-12 -->
                 </div>
@@ -107,7 +122,7 @@ crossorigin=""/>
                                                     <label for="phone">Phone
                                                         <sup>*</sup>
                                                     </label>
-                                                    <input type="text" name="phone" id="phone" class="text_field @error('phone') validation @enderror" placeholder="Please,Enter Your Phone Number..." value="{{ old('phone') }}" style="border-radius: 12px;" >
+                                                    <input type="text" name="phone" id="phone" class="text_field @error('phone') validation @enderror" placeholder="Please,Enter Your Phone Number..." value="{{ old('phone') ?? '' }}" style="border-radius: 12px;">
                                                     @error('phone')
                                                         <span class="span-validation">{{ $message }}</span>
                                                     @enderror

@@ -7,15 +7,16 @@ class="preload home1 mutlti-vendor"
 @endsection
 @section('content')
 <!-- start contact us ------------------------------------------------------------------- -->
-<div class="contact-sec" style="background-color: #b8e5ea;">
+<div class="contact-sec" style="background-color: #bae5f8;">
     <div class="contact-text">
         <p>Share us your opinion:</p>
     </div>
+
     <div class="row">
-        <div class="col-12 col-xl-4" >
-            <img src="{{ asset('images/contact.jpg') }}" class="rounded mx-auto d-block" alt="..." style="height: 400px; width: 100%;">
+        <div class="col-lg-5 col-md-12" style="display: flex;align-items: center;justify-content: center;">
+            <img src="{{ asset('images/contact.jpg') }}" class="mx-auto d-block" alt="..." style="width: 100%;">
         </div>
-        <div class="col-12 col-xl-8">
+        <div class="col-lg-7 col-md-12">
             <div class="filling-sec">
                 <div class="col-md-8 offset-md-2">
                     <div class="contact_form--wrapper">
@@ -44,7 +45,7 @@ class="preload home1 mutlti-vendor"
                                 <span class="lnr lnr-chevron-down"></span>
                             </div>
                             <div style="font-size: 20px;font-weight: bold; color: #253e6f;padding: 3px;">Message:</div>
-                            <textarea cols="30" rows="5" placeholder="Your text here"></textarea>
+                            <textarea cols="30" rows="5" placeholder="Yout text here"></textarea>
                             <div class="sub_btn">
                                 <button type="button" class="btn btn--round btn--default" style="margin-top: 20px;">Send Message</button>
                             </div>

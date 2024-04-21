@@ -34,7 +34,7 @@ class="preload home3"
                     <div class="modules__content">
                         <div class="withdraw_module withdraw_history">
                             <div class="withdraw_table_header">
-                                <h3>UnBlocked Users</h3>
+                                <h3>All Users</h3>
                             </div>
                             <div class="table-responsive">
                                 <table class="table withdraw__table">

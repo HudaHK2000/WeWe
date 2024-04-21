@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('address');
             $table->double('latitude');
             $table->double('longitude');
+            $table->unsignedInteger('car_count')->default(0);
             $table->string('status')->default('Available');
             $table->unsignedBigInteger('city_id');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');

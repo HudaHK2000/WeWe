@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->references('id')->on('orders');
             $table->foreignId('hospital_id')->constrained()->references('id')->on('hospitals');
-            $table->string('status');
+            $table->string('status')->default('Pending');
             $table->timestamps();
         });
     }

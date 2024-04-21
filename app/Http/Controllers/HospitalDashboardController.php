@@ -18,11 +18,6 @@ class HospitalDashboardController extends Controller
         return view('HospitalDashboard.hospitalDashboard',compact('hospital'));    
     }
 
-    public function showGPS($id){
-        $hospital = Hospital::find($id);
-        return view('BackEnd.hospital.map',compact('hospital'));
-    }
-
     public function show($hospital_id)
     {
         // dd($hospital_id);
@@ -63,4 +58,14 @@ class HospitalDashboardController extends Controller
         return redirect()->back()->with('success','The modification was completed successfully.');
     }
     
+    public function index()
+    {
+        $orders = Order::where('hide',0)->get();
+        return view('HospitalDashboard.order.index',compact('orders'));
+    }
+
+    public function showGPS($id){
+        $order = Order::find($id);
+        return view('HospitalDashboard.order.map',compact('order'));
+    }
 }

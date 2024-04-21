@@ -7,6 +7,8 @@ use App\Models\Hospital;
 use App\Models\UrgentUser;
 use App\Models\OrderStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,9 +19,14 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::where('hide',1)->get();
+        return view('BackEnd.order.index',compact('orders'));
     }
 
+    public function showGPS($id){
+        $order = Order::find($id);
+        return view('BackEnd.order.map',compact('order'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -57,149 +64,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
-    public function submitOrder(Request $request)
-    {
-        // تحديد قواعد التحقق
-        // $rules = [
-        //     'phone' => ['required', 'numeric', 'digits:10', 'regex:/^09/'],
-        //     'status_id' => ['required'],
-        //     'blood_group' => ['required'],
-        //     'latitude' => ['required'],
-        //     'longitude' => ['required'],
-        // ];
-
-        // تحقق من البيانات المرسلة
-        // $validator = Validator::make($request->all(), $rules);
-
-        // في حال حدوث أي أخطاء في التحقق
-        // if ($validator->fails()) {
-        //     return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()]);
-        // }
-        // dd( $validator->errors()->toArray());
-        // معالجة البيانات الصحيحة هنا
-        // على سبيل المثال: إنشاء الطلب في قاعدة البيانات
-
-
-        $order = Order::create([
-            'phone' => $request->phone,
-            'status_id' => $request->status_id,
-            'blood_group' => $request->blood_group,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            // قم بإضافة المزيد من الحقول إذا لزم الأمر
-        ]);
-
-        // استجابة JSON بنجاح الإرسال
-        return response()->json(['success' => true]);
-    }
-
-    public function addOrderGuest(Request $request)
-    {
-        // تنفيذ التحقق من الصحة
-        $validator = Validator::make($request->all(), [
-            'phone' => ['required', 'numeric', 'digits:10', 'regex:/^09/'],
-            'status_id' => ['required'],
-            'blood_group' => ['required'],
-            'latitude' => ['required'],
-            'longitude' => ['required'],
-        ], [
-            'phone.required' => 'Phone number is required.',
-            'phone.numeric' => 'Phone number must be numeric.',
-            'phone.digits' => 'Phone number must be 10 digits long.',
-            'phone.regex' => 'Phone number must start with "09".',
-            'status_id.required' => 'status is required.',
-        ]);
-        
-        // إذا كان هناك خطأ في التحقق من الصحة، قم بإعادة عرض النموذج مع رسائل الخطأ واستدعاء الدالة `displayModal2()`
-        $hasErrors = $validator->fails();
-    
-        // إذا كان هناك خطأ في التحقق من الصحة، قم بإعادة عرض النموذج مع رسائل الخطأ
-        if ($hasErrors) {
-            // dd($hasErrors,$validator);
-            return redirect()->back()->withErrors($validator)->withInput()->with('modal', 'modal2');
-        } else {
-            // يجب التحقق أولاً مما إذا كان رقم الهاتف موجودًا بالفعل في جدول المستخدمين العاجلين
-            $urgentUser = UrgentUser::firstOrCreate(['phone' => $request->phone]);
-            // يمكنك الآن الوصول إلى الـ id للمستخدم العاجل
-            $urgentUserId = $urgentUser->id;
-            // يمكنك الآن إنشاء الطلب باستخدام الـ id الخاص بالمستخدم العاجل
-            $order = Order::create([
-                'urgent_user_id' => $urgentUserId,
-                'blood_group' => $request->blood_group,
-                'latitude' => $request->latitude,
-                'longitude' => $request->longitude,
-            ]);
-            // حصول على id الطلب
-            $orderId = $order->id;
-            $selectedStatuses = $request->input('status_id'); 
-            // استخدام foreach لإنشاء سجلات في جدول OrderStatus لكل قيمة من $selectedStatuses
-            foreach($selectedStatuses as $selectedStatus) {
-                $status = new OrderStatus();
-                $status->order_id = $orderId;
-                $status->status_id = $selectedStatus;
-                $status->save();
-            }
-             // إذا لم يكن هناك أخطاء، يمكنك هنا إظهار المودال
-            // $modalMessage = "Find the nearest hospital";
-            
-            // قم بتمرير الرسالة إلى العرض
-            return redirect()->back()->with('modal', 'modal3');
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function addOrderUser(Request $request)
-    {
-        // تنفيذ التحقق من الصحة
-        $validator = Validator::make($request->all(), [
-            'status_id' => ['required'],
-            'blood_group' => ['required'],
-            'latitude' => ['required'],
-            'longitude' => ['required'],
-        ], [
-            'status_id.required' => 'status is required.',
-        ]);
-        
-        // إذا كان هناك خطأ في التحقق من الصحة، قم بإعادة عرض النموذج مع رسائل الخطأ واستدعاء الدالة `displayModal2()`
-        $hasErrors = $validator->fails();
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput()->with('modal', 'modal2');
-        } else {
-            $order = Order::create([
-                'user_id' => Auth::user()->id,
-                'blood_group' => $request->blood_group,
-                'latitude' => $request->latitude,
-                'longitude' => $request->longitude,
-                // my sister's home
-                // 'latitude' => 36.1988229,
-                // 'longitude' => 37.0991074,
-                // near alresale hospital
-                // 'latitude' => 36.21327470968656,
-                // 'longitude' => 37.1408298611641,
-            ]);
-            // حصول على id الطلب
-            $orderId = $order->id;
-            $selectedStatuses = $request->input('status_id'); 
-            // استخدام foreach لإنشاء سجلات في جدول OrderStatus لكل قيمة من $selectedStatuses
-            foreach($selectedStatuses as $selectedStatus) {
-                $status = new OrderStatus();
-                $status->order_id = $orderId;
-                $status->status_id = $selectedStatus;
-                $status->save();
-            }
-            // إذا لم يكن هناك أخطاء، يمكنك هنا إظهار المودال
-            $modalMessage = "Find the nearest hospital";
-            // search($orderId);
-            $this->search($order);
-            // قم بتمرير الرسالة إلى العرض
-            return redirect()->back()->with('modal', 'modal3');
-        }
-    }
-    /**
+        /**
      * Display the specified resource.
      */
     public function show(Order $order)
@@ -230,5 +95,210 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function addOrderGuest(Request $request)
+    {
+        // تنفيذ التحقق من الصحة
+        $validator = Validator::make($request->all(), [
+            'phone' => ['required', 'numeric', 'digits:10', 'regex:/^09/'],
+            'status_id' => ['required'],
+            'blood_group' => ['required'],
+            // 'latitude' => ['required'],
+            // 'longitude' => ['required'],
+        ], [
+            'phone.required' => 'Phone number is required.',
+            'phone.numeric' => 'Phone number must be numeric.',
+            'phone.digits' => 'Phone number must be 10 digits long.',
+            'phone.regex' => 'Phone number must start with "09".',
+            'status_id.required' => 'status is required.',
+        ]);
+        
+        // إذا كان هناك خطأ في التحقق من الصحة، قم بإعادة عرض النموذج مع رسائل الخطأ واستدعاء الدالة `displayModal2()`
+        $hasErrors = $validator->fails();
+    
+        // إذا كان هناك خطأ في التحقق من الصحة، قم بإعادة عرض النموذج مع رسائل الخطأ
+        if ($hasErrors) {
+            // dd($hasErrors,$validator);
+            return redirect()->back()->withErrors($validator)->withInput()->with('modal', 'modal2');
+        } else {
+            // dd($request);
+            // يجب التحقق أولاً مما إذا كان رقم الهاتف موجودًا بالفعل في جدول المستخدمين العاجلين
+            $urgentUser = UrgentUser::firstOrCreate(['phone' => $request->phone]);
+            // يمكنك الآن الوصول إلى الـ id للمستخدم العاجل
+            $urgentUserId = $urgentUser->id;
+            // يمكنك الآن إنشاء الطلب باستخدام الـ id الخاص بالمستخدم العاجل
+            $order = Order::create([
+                'urgent_user_id' => $urgentUserId,
+                'blood_group' => $request->blood_group,
+                // 'latitude' => $request->latitude,
+                // 'longitude' => $request->longitude,
+                // near alresale hospital
+                'latitude' => 36.21327470968656,
+                'longitude' => 37.1408298611641,
+            ]);
+            // حصول على id الطلب
+            $orderId = $order->id;
+            $selectedStatuses = $request->input('status_id'); 
+            // استخدام foreach لإنشاء سجلات في جدول OrderStatus لكل قيمة من $selectedStatuses
+            foreach($selectedStatuses as $selectedStatus) {
+                $status = new OrderStatus();
+                $status->order_id = $orderId;
+                $status->status_id = $selectedStatus;
+                $status->save();
+            }
+             // إذا لم يكن هناك أخطاء، يمكنك هنا إظهار المودال
+            // $modalMessage = "Find the nearest hospital";
+            
+            // قم بتمرير الرسالة إلى العرض
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function addOrderUser(Request $request)
+    {
+        // تنفيذ التحقق من الصحة
+        $validator = Validator::make($request->all(), [
+            'status_id' => ['required'],
+            'blood_group' => ['required'],
+            // 'latitude' => ['required'],
+            // 'longitude' => ['required'],
+        ], [
+            'status_id.required' => 'status is required.',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('modal', 'modal2');
+
+            // return response()->json(['success' => false, 'errors' => $validator->errors()->toArray()]);
+        } else {
+            $order = Order::create([
+                'user_id' => Auth::user()->id,
+                'blood_group' => $request->blood_group,
+                // 'latitude' => $request->latitude,
+                // 'longitude' => $request->longitude,
+                // my sister's home
+                // 'latitude' => 36.1988229,
+                // 'longitude' => 37.0991074,
+                // Amira's home
+                // 'latitude' => 36.20220687746932,
+                // 'longitude' => 37.09321528673173,
+                // near alresale hospital
+                'latitude' => 36.21327470968656,
+                'longitude' => 37.1408298611641,
+                // near al-razi hospital
+                // 'latitude' => 36.21134433619996 ,
+                // 'longitude' => 37.138995230197914 ,
+            ]);
+            // حصول على id الطلب
+            $orderId = $order->id;
+            $selectedStatuses = $request->input('status_id'); 
+            // استخدام foreach لإنشاء سجلات في جدول OrderStatus لكل قيمة من $selectedStatuses
+            foreach($selectedStatuses as $selectedStatus) {
+                $status = new OrderStatus();
+                $status->order_id = $orderId;
+                $status->status_id = $selectedStatus;
+                $status->save();
+            }
+            return redirect()->back();
+            // بعد حفظ بيانات الطلب بشكل صحيح
+
+            // إغلاق واجهة modal2
+            // return response()->json(['success' => true, 'closeModal' => 'myModal2', 'openModal' => 'myModal3']);
+
+            // إيجاد أقرب مستشفى متاح
+            // $userLatitude = $request->latitude;
+            // $userLongitude = $request->longitude;
+            // $userLatitude = 36.1988229;
+            // $userLongitude = 37.0991074;
+            // Amira's home
+            // $userLatitude = 36.20220687746932;
+            // $userLongitude = 37.09321528673173;
+            // near alresale hospital
+            $userLatitude =  36.21327470968656;
+            $userLongitude = 37.1408298611641;
+            // dd($userLatitude,$userLongitude);
+            $availableHospitals = Hospital::where('status', 'Available')->get(); // استرداد المستشفيات المتاحة فقط
+            // dd($availableHospitals->count());
+            // اذا كان هناك مشافي متاحة
+            if ($availableHospitals) {
+                $nearestHospitals = $this->findNearestHospitalsUsingKNN($userLatitude, $userLongitude, $availableHospitals);
+                if ($nearestHospitals) {
+                    // إرسال طلب إلى أقرب مستشفى
+                    // sendOrderRequest($nearestHospital->id, $orderId);
+                    //   dump($nearestHospitals);
+    
+
+                } else {
+                    // لا توجد مستشفيات متاحة في المنطقة
+
+                }
+            }
+            // اذا لم يكن هناك مشافي متاحة
+            else{
+
+            }
+        }
+    }
+
+
+    function findNearestHospitalsUsingKNN($userLatitude, $userLongitude, $hospitals, $k = 2) {
+        // قائمة فارغة لتخزين معلومات المسافة والمستشفى
+        $distanceAndHospitalData = [];
+    
+        // حساب المسافات بين المشافي المتاحة ومكان الشخص الذي قام بالطلب وإنشاء هيكل البيانات
+        foreach ($hospitals as $hospital) {
+            $distance = $this->calculateDistance($userLatitude, $userLongitude, $hospital->latitude, $hospital->longitude);
+            $distanceAndHospitalData[] = [
+                'distance' => $distance,
+                'hospital' => $hospital,
+            ];
+        }
+    
+        // فرز هيكل البيانات حسب المسافة
+        // تقوم دالة usort بفرز مصفوف في PHP وفقًا لمعيار مخصص. في هذا الجزء من الكود، يتم استخدامها لفرز مصفوف $distanceAndHospitalData بحيث تكون أقرب المستشفيات في المقدمة.
+        usort($distanceAndHospitalData, function ($data1, $data2) {
+            return $data1['distance'] - $data2['distance'];
+        });
+        // foreach ($distanceAndHospitalData as $data) {
+        //     echo "distance: " . $data['distance'] . " hospital: " . $data['hospital']->name . "\n"; // استبدل name بصفة اسم المستشفى في الكائن
+        // }
+        
+    
+        // اختيار أقرب `k` مستشفيات
+        $nearestHospitals = [];
+        for ($i = 0; $i < $k; $i++) {
+            $nearestHospitals[] = $distanceAndHospitalData[$i]['hospital'];
+        }
+        // dump($nearestHospitals);
+
+        return $nearestHospitals;
+    }
+    
+    // دالة لحساب المسافة بين نقطتين
+    function calculateDistance($latitude1, $longitude1, $latitude2, $longitude2) {
+        $earthRadius = 6371e3; // نصف قطر الأرض بالأمتار
+    
+        $deltaLatitude = deg2rad($latitude2 - $latitude1);
+        $deltaLongitude = deg2rad($longitude2 - $longitude1);
+    
+        $a = sin($deltaLatitude / 2) * sin($deltaLatitude / 2) +
+            cos($latitude1) * cos($latitude2) *
+            sin($deltaLongitude / 2) * sin($deltaLongitude / 2);
+    
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+    
+        $distance = $earthRadius * $c;
+    
+        return $distance;
+    }
+    
+    // دالة لتحويل الدرجات إلى راديان
+    function deg2rad($degrees) {
+        return $degrees * (pi() / 180);
+    }
+    
     
 }
