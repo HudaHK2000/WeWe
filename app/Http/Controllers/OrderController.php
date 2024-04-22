@@ -6,9 +6,11 @@ use App\Models\Order;
 use App\Models\Hospital;
 use App\Models\UrgentUser;
 use App\Models\OrderStatus;
+use App\Models\OrderHospital;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,7 +21,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('hide',1)->get();
+        $orders = Order::whereNotIn('status', ['NewOrder'])->get();
         return view('BackEnd.order.index',compact('orders'));
     }
 
@@ -202,7 +204,6 @@ class OrderController extends Controller
                 $status->status_id = $selectedStatus;
                 $status->save();
             }
-            return redirect()->back();
             // بعد حفظ بيانات الطلب بشكل صحيح
 
             // إغلاق واجهة modal2
@@ -228,8 +229,15 @@ class OrderController extends Controller
                 if ($nearestHospitals) {
                     // إرسال طلب إلى أقرب مستشفى
                     // sendOrderRequest($nearestHospital->id, $orderId);
-                    //   dump($nearestHospitals);
-    
+                    // dump($nearestHospitals);
+                    foreach ($nearestHospitals as $hospital) {
+                        $this->sendOrderToHospitaldashboard($orderId, $hospital->id);
+            
+                        // $orderStatus = $this->getOrderStatus($orderId);
+                        // if ($orderStatus === 'Agree') {
+                        //     break;
+                        // }
+                    }
 
                 } else {
                     // لا توجد مستشفيات متاحة في المنطقة
@@ -240,11 +248,42 @@ class OrderController extends Controller
             else{
 
             }
+        // return redirect()->back();
+
         }
     }
 
+    private function sendOrderToHospitaldashboard($orderId, $hospitalId)
+    {
+        $order = Order::find($orderId);
+        // $hospitalData = [
+        //     'order_id' => $order->id,
+        //     'hospital_id' => $hospitalId,
+        // ];
+        // dump($hospitalData);
 
-    function findNearestHospitalsUsingKNN($userLatitude, $userLongitude, $hospitals, $k = 2) {
+        $orderHospital = OrderHospital::create([
+            'order_id' => $orderId,
+            'hospital_id' => $hospitalId,
+        ]);
+        // $response = Http::post('http://localhost:8000/receive-order/', $hospitalData);
+
+        // if ($response->ok()) {
+        //     $this->updateOrderStatus($orderId, 'Agree');
+        // } else {
+        //     $this->updateOrderStatus($orderId, 'Dis Agree');
+        // }
+    }
+    private function updateOrderStatus($orderId, $status)
+    {
+        Order::find($orderId)->update(['status' => $status]);
+    }
+
+    private function getOrderStatus($orderId)
+    {
+        return Order::find($orderId)->status;
+    }
+    function findNearestHospitalsUsingKNN($userLatitude, $userLongitude, $hospitals, $k = 1) {
         // قائمة فارغة لتخزين معلومات المسافة والمستشفى
         $distanceAndHospitalData = [];
     

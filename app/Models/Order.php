@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable=['latitude','longitude','blood_group','user_id','urgent_user_id','car_id','price','hide','created_at'];
+    protected $fillable=['latitude','longitude','blood_group','user_id','urgent_user_id','car_id','status','price','hide','created_at'];
 
     public function ordersStatuses(){
         return $this->hasMany('App\Models\OrderStatus');

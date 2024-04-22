@@ -45,6 +45,7 @@ class="preload home3"
                                             <th>Blood Group</th>
                                             <th>The Condition</th>
                                             <th>Map</th>
+                                            <th>Hospital</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
@@ -76,6 +77,9 @@ class="preload home3"
                                                     </a>
                                                 </span>
                                                 
+                                            </td>
+                                            <td>
+                                                {{ $order->hospitals->first()->hospital->name }}
                                             </td>
                                             <td>
                                                 {{ $order->status }}

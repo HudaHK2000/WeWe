@@ -80,6 +80,10 @@ Route::middleware(['auth', 'HospitalAdmin'])->group(function () {
     // Route for orders
     Route::get('/hospital/{hospital_id}/show-order', [HospitalDashboardController::class, 'index'])->name('hospital.show-order');
     Route::get('customer-location/{id}/{hospital_id}', [HospitalDashboardController::class, 'showGPS']);
+    Route::post('/receive-order', [HospitalDashboardController::class, 'receiveOrder']);
+    Route::post('/hospital/{hospital_id}/order/{order_hospital_id}/agree', [HospitalDashboardController::class, 'agreeOrder']);
+    Route::post('/hospital/{hospital_id}/order/{order_hospital_id}/completed', [HospitalDashboardController::class, 'completedOrder']);
+    Route::post('/hospital/{hospital_id}/order/{order_hospital_id}/dis-agree', [HospitalDashboardController::class, 'disAgreeOrder']);
 });
 
 Route::middleware('auth')->group(function () {
