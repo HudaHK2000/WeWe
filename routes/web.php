@@ -73,13 +73,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'HospitalAdmin'])->group(function () {
-    Route::get('/hospital/{hospital_id}/dashboard', [HospitalDashboardController::class, 'dashboard']);
+    Route::get('/hospital/{hospital_id}/dashboard', [HospitalDashboardController::class, 'dashboard'])->name('DashboardHospital');
     Route::get('/getCities/{countryId}', [HospitalDashboardController::class,'getCities']);
     Route::get('/hospital/{hospital_id}/show', [HospitalDashboardController::class, 'show']);
     Route::post('/hospital/{hospital_id}/update', [HospitalDashboardController::class, 'update']);
     // Route for orders
-    Route::post('order/{hospital_id}/add', [HospitalDashboardController::class, 'index']);
-    Route::get('customer-location/{id}', [HospitalDashboardController::class, 'showGPS']);
+    Route::get('/hospital/{hospital_id}/show-order', [HospitalDashboardController::class, 'index'])->name('hospital.show-order');
+    Route::get('customer-location/{id}/{hospital_id}', [HospitalDashboardController::class, 'showGPS']);
 });
 
 Route::middleware('auth')->group(function () {

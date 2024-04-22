@@ -11,8 +11,6 @@ class="preload home3"
 <a href="{{ url('dashboard') }}">Dashboard</a>
 @endsection
 
-
-
 @section('css')
 <style>
     .back {

@@ -1,5 +1,4 @@
-@extends('layout.masterDashboard')
-
+@extends('HospitalDashboard.masterHospitalDashboard')
 @section('title')
 Orders
 @endsection
@@ -42,8 +41,6 @@ class="preload home3"
                                         <tr>
                                             <th>ID</th>
                                             <th>Phone</th>
-                                            <th>latitude</th>
-                                            <th>longitude</th>
                                             <th>Blood Group</th>
                                             <th>Statuses</th>
                                             <th>Map</th>
@@ -60,8 +57,6 @@ class="preload home3"
                                             @elseif ($order->urgent_user_id)
                                                 <td>{{ $order->urgentUser->phone }}</td>
                                             @endif
-                                            <td>{{ $order->latitude }}</td>
-                                            <td>{{ $order->longitude }}</td>
                                             <td>{{ $order->blood_group }}</td>
                                             <td>
                                                 <ul style="text-align: start">
@@ -74,7 +69,7 @@ class="preload home3"
                                             </td>
                                             <td class="paid">
                                                 <span style="color: #0674ec">
-                                                    <a href='{{ url("customer-location/$order->id") }}' >
+                                                    <a href='{{ url("customer-location/$order->id/$hospital_id") }}' >
                                                         <i class="fas fa-map-marker-alt"></i>
                                                         Show Map
                                                     </a>

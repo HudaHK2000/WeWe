@@ -1,5 +1,4 @@
-@extends('layout.masterDashboard')
-
+@extends('HospitalDashboard.masterHospitalDashboard')
 @section('title')
 Car
 @endsection

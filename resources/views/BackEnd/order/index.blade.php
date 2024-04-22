@@ -42,8 +42,6 @@ class="preload home3"
                                         <tr>
                                             <th>ID</th>
                                             <th>Phone</th>
-                                            <th>latitude</th>
-                                            <th>longitude</th>
                                             <th>Blood Group</th>
                                             <th>The Condition</th>
                                             <th>Map</th>
@@ -60,8 +58,6 @@ class="preload home3"
                                             @elseif ($order->urgent_user_id)
                                                 <td>{{ $order->urgentUser->phone }}</td>
                                             @endif
-                                            <td>{{ $order->latitude }}</td>
-                                            <td>{{ $order->longitude }}</td>
                                             <td>{{ $order->blood_group }}</td>
                                             <td>
                                                 <ul style="text-align: start">
@@ -81,7 +77,9 @@ class="preload home3"
                                                 </span>
                                                 
                                             </td>
-                                           
+                                            <td>
+                                                {{ $order->status }}
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

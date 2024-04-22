@@ -1,4 +1,4 @@
-@extends('HospitalDashboard.hospitalDashboard')
+@extends('HospitalDashboard.masterHospitalDashboard')
 
 @section('title')
 Hospital Dashboard

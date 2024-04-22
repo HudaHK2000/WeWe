@@ -81,6 +81,13 @@
                                                 <span class="fas fa-home"></span>{{ __('Dashboard') }}</a>
                                         </li>
                                         @endif
+                                        @if (auth()->user()->is_admin == '2' )
+                                            <li>
+                                                <a href='{{ url("hospital/" . auth()->user()->hospital_id . "/dashboard") }}' class="@if (Request::is('hospital/*/dashboard')) active @endif">
+                                                    <span class="fas fa-home"></span>{{ __('Dashboard Hospital') }}
+                                                </a>
+                                            </li>
+                                        @endif
                                     <li class="@if (Request::is('profile')) active @endif">
                                         <a href="{{ url('profile') }}">
                                             <span class="fas fa-user"></span>{{ __('Profile') }}</a>
@@ -184,6 +191,13 @@
                                             <a href="{{ route('dashboard') }}" class="@if (Request::is('dashboard')) active @endif">
                                                 <span class="fas fa-home"></span>{{ __('Dashboard') }}</a>
                                         </li>
+                                        @endif
+                                        @if (auth()->user()->is_admin == '2' )
+                                            <li>
+                                                <a href='{{ url("hospital/" . auth()->user()->hospital_id . "/dashboard") }}' class="@if (Request::is('hospital/*/dashboard')) active @endif">
+                                                    <span class="fas fa-home"></span>{{ __('Dashboard Hospital') }}
+                                                </a>
+                                            </li>
                                         @endif
                                     <li class="@if (Request::is('profile')) active @endif">
                                         <a href="{{ url('profile') }}">
